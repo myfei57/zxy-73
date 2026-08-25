@@ -6,10 +6,13 @@ type SteamWarmupPort interface {
 }
 
 func (c *Controller) Warmup(port SteamWarmupPort) error {
-	if err := port.OpenValve(); err != nil {
+	// Drain condensate via the trap before admitting steam, otherwise the
+	// steam drives undrained condensate through the piping and causes water
+	// hammer that can loosen elbows and flanges.
+	if err := port.Trap(); err != nil {
 		return err
 	}
-	if err := port.Trap(); err != nil {
+	if err := port.OpenValve(); err != nil {
 		return err
 	}
 	c.mu.Lock()
