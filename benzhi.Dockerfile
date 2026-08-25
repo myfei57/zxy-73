@@ -1,0 +1,5 @@
+FROM golang:1.23-bookworm
+
+WORKDIR /src
+COPY . .
+CMD ["go", "test", "./..."]
