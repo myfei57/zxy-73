@@ -7,6 +7,9 @@ func (r *Registry) Swap(id string, sensorIDs []string) (Mold, error) {
 	if !ok {
 		return Mold{}, ErrMoldNotFound
 	}
+	m.SensorIDs = sensorIDs
+	m.MapVersion++
+	r.molds[id] = m
 	return m, nil
 }
 
