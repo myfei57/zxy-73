@@ -5,6 +5,9 @@ type SteamPurgePort interface {
 }
 
 func (l *LiftControl) Close(steam SteamPurgePort) error {
+	if err := steam.Purge(); err != nil {
+		return err
+	}
 	l.closed = true
-	return steam.Purge()
+	return nil
 }
